@@ -4,14 +4,23 @@ mongoose.Promise = global.Promise;
 //create Schema
 const workspaceSchema = new mongoose.Schema ({
   name: {
-    type: String,
-    required: true
+    type: String
+  },
+  id: {
+    type: String
   },
   rating: {
     type: Number
   },
-  likes: {
-    type: Number
+  description: {
+    type: String,
+    // required: true
+  },
+  image: {
+    type: String
+  },
+  location: {
+    type: String
   }
 });
 

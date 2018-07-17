@@ -22,8 +22,18 @@ const styles = theme => ({
   },
 });
 
+
+
 function FindButton(props) {
+
   const { classes } = props;
+
+  const handleClick = () => {
+  console.log('clicked')
+}
+
+
+
   return (
     <div className={classes.findButtonDiv}>
       <Button 
@@ -31,6 +41,7 @@ function FindButton(props) {
         aria-label="Find" 
         className={classes.button}
         color="primary"
+        onClick={handleClick}
       >
       Near
         <NavigationIcon className={classes.extendedIcon} />

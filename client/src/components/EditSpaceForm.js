@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -26,6 +27,33 @@ class EditSpaceForm extends React.Component {
         };
         this.props.updateSpace(this.props.index, updatedSpace)
     }
+
+    saveUpdatedToDb = () => {
+        console.log('saving updated to db')
+
+        console.log(this.props.id)
+        axios.post(`/update/${this.props.id}`, {
+            // id: this.props.id,
+            name: this.props.name,
+            location: this.props.location,
+            rating: this.props.rating,
+            description: this.props.description,
+            image: this.props.image
+        })
+
+
+        this.props.handleEditClick();
+    }
+
+    deleteFromStateAndDb = () => {
+        //state
+        this.props.deleteSpace(this.props.index)
+
+        //mongo
+        axios.post(`/delete/${this.props.id}`)
+
+    }
+
     
     render(){
         const { classes } = this.props;
@@ -53,7 +81,7 @@ class EditSpaceForm extends React.Component {
                 />
                 <Input
                     placeholder="Description"
-                    name="decription"
+                    name="description"
                     onChange={this.handleChange}
                     value={this.props.description}
                 />
@@ -63,7 +91,8 @@ class EditSpaceForm extends React.Component {
                     onChange={this.handleChange}
                     value={this.props.image}
                 />
-                <Button onClick={() => this.props.deleteSpace(this.props.index)}>Remove Space</Button>
+                <Button onClick={this.saveUpdatedToDb}>Save</Button>
+                <Button onClick={this.deleteFromStateAndDb}>Delete Space</Button>
                 </div>
           );
     }

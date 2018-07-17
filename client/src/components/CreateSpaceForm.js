@@ -4,6 +4,8 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+import axios from 'axios';
+import uuid from 'uuid';
 
 const styles = theme => ({
   container: {
@@ -30,11 +32,15 @@ const styles = theme => ({
 class CreateSpaceForm extends React.Component {
 
 
+
+
     createSpace = event => {
         event.preventDefault();
         // console.log('making a space')
+        const spaceId = uuid();
 
         const space = {
+            id: spaceId,
             name: this.props.details.nameInput,
             location: this.props.details.locationInput,
             rating: this.props.details.ratingInput,
@@ -42,9 +48,26 @@ class CreateSpaceForm extends React.Component {
             image: this.props.details.imageInput
         }
         console.log('space')
-
         this.props.addSpace(space)
-        // event.currentTarget.reset();
+
+        console.log('axios post req')
+        axios.post('/add', {
+            id: spaceId,
+            name: this.props.details.nameInput,
+            rating: this.props.details.ratingInput,
+            description: this.props.details.descriptionInput,
+            location: this.props.details.locationInput,
+            image: this.props.details.imageInput
+        })
+          .then(function(response){
+              console.log(response)
+          })
+          .catch(function(error){
+              console.log(error)
+          })
+          .then(function(){
+              console.log('clearing form')
+          })
     }
 
     render(){
@@ -58,45 +81,31 @@ class CreateSpaceForm extends React.Component {
                     name="nameInput"
                     onChange={this.props.handleChange}
                     value={this.props.details.nameInput}
-                    inputProps={{
-                    'aria-label': 'Description',
-                    }}
                 />
                 <Input
                     placeholder="Location"
                     name="locationInput"
                     onChange={this.props.handleChange}
                     value={this.props.details.locationInput}
-                    inputProps={{
-                    'aria-label': 'Description',
-                    }}
                 />
                 <Input
                     placeholder="Rating"
                     name="ratingInput"
+                    type="number"
                     onChange={this.props.handleChange}
                     value={this.props.details.ratingInput}
-                    inputProps={{
-                    'aria-label': 'Description',
-                    }}
                 />
                 <Input
                     placeholder="Description"
                     name="descriptionInput"
                     onChange={this.props.handleChange}
                     value={this.props.details.descriptionInput}
-                    inputProps={{
-                    'aria-label': 'Description',
-                    }}
                 />
                 <Input
                     placeholder="Image"
                     name="imageInput"
                     onChange={this.props.handleChange}
                     value={this.props.details.imageInput}
-                    inputProps={{
-                    'aria-label': 'Description',
-                    }}
                 />
                 <Button onClick={this.createSpace}>Add</Button>
                 </form>
