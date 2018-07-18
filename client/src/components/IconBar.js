@@ -1,17 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
+import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ExploreIcon from '@material-ui/icons/Explore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-
-
-
-const handleClick = (e) => {
-  console.log(e.target.name, e.target.value)
-}
 
 const styles = theme => ({
 
@@ -46,36 +40,43 @@ const styles = theme => ({
   },
 })
 
-function IconBar(props){
+const  IconBar = (props) => {
   const { classes } = props;
       return(
         <div className={classes.iconBar}>
-    
-          <Button 
-            className={classes.button} 
-            name="addSpace" 
-            variant="fab"
-            onClick={handleClick}
-            >
+        
+          <Link to="/addSpace">
+            <Button 
+              className={classes.button} 
+              name="addSpace" 
+              variant="fab"
+              >
               <AddCircleIcon className={classes.IconBarIcon}/>
-          </Button>
-          <Button 
-            className={classes.button}
-            name="explore" 
-            variant="fab"
-            onClick={handleClick}
-            >
+            </Button>
+          </Link>
+
+          <Link to="/explore">
+            <Button 
+              className={classes.button}
+              name="explore" 
+              variant="fab"
+              href="/explore"
+              >
               <ExploreIcon className={classes.IconBarIcon}/>
-          </Button>
-          <Button 
-            className={classes.button}
-            name="favorites" 
-            variant="fab"
-            onClick={handleClick}
-          
-            >
+            </Button>
+          </Link>
+
+          <Link to="/favorites">
+            <Button 
+              className={classes.button}
+              name="favorites" 
+              variant="fab"
+              href="/favorites"          
+              >
               <FavoriteIcon className={classes.IconBarIcon}/>
-          </Button>
+            </Button>
+          </Link>
+
         </div>
       )
     }

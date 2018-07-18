@@ -3,7 +3,6 @@ const Workspace = mongoose.model('Workspace');
 const uuid = require('uuid');
 
 
-
 exports.createWorkspace = async (req, res) => {
   const workspace = await (new Workspace(req.body)).save();
   console.log('workspace created', workspace)
@@ -34,5 +33,5 @@ exports.getWorkspaces = async (req, res) => {
   console.log('workspaces:', workspaces, 'count:', count)
   console.log('length', workspaces.length);
 
-  return workspaces
+  // return workspaces
 }

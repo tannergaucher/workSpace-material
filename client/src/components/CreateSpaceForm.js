@@ -4,6 +4,8 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+import NavBar from './NavBar';
+
 import axios from 'axios';
 import uuid from 'uuid';
 
@@ -31,12 +33,8 @@ const styles = theme => ({
 
 class CreateSpaceForm extends React.Component {
 
-
-
-
     createSpace = event => {
         event.preventDefault();
-        // console.log('making a space')
         const spaceId = uuid();
 
         const space = {
@@ -72,43 +70,54 @@ class CreateSpaceForm extends React.Component {
 
     render(){
         const { classes } = this.props;
+        // const {
+        //     nameInput, 
+        //     locationInput, 
+        //     ratingInput, 
+        //     descriptionInput,
+        //     imageInput } = this.props.details
 
         return (
-            <div className={classes.container}>
-                <form onSubmit={this.handleSubmit} className={classes.addForm}>
-                <Input
-                    placeholder="Name"
-                    name="nameInput"
-                    onChange={this.props.handleChange}
-                    value={this.props.details.nameInput}
+            <div>
+                <NavBar
+                  title={'Back'}
                 />
-                <Input
-                    placeholder="Location"
-                    name="locationInput"
-                    onChange={this.props.handleChange}
-                    value={this.props.details.locationInput}
-                />
-                <Input
-                    placeholder="Rating"
-                    name="ratingInput"
-                    type="number"
-                    onChange={this.props.handleChange}
-                    value={this.props.details.ratingInput}
-                />
-                <Input
-                    placeholder="Description"
-                    name="descriptionInput"
-                    onChange={this.props.handleChange}
-                    value={this.props.details.descriptionInput}
-                />
-                <Input
-                    placeholder="Image"
-                    name="imageInput"
-                    onChange={this.props.handleChange}
-                    value={this.props.details.imageInput}
-                />
-                <Button onClick={this.createSpace}>Add</Button>
-                </form>
+                <div className={classes.container}>
+                    <form onSubmit={this.handleSubmit} className={classes.addForm}>
+                    <Input
+                        placeholder="Name"
+                        name="nameInput"
+                        onChange={this.props.handleChange}
+                        // value={nameInput}
+                    />
+                    <Input
+                        placeholder="Location"
+                        name="locationInput"
+                        onChange={this.props.handleChange}
+                        // value={locationInput}
+                    />
+                    <Input
+                        placeholder="Rating"
+                        name="ratingInput"
+                        type="number"
+                        onChange={this.props.handleChange}
+                        // value={ratingInput}
+                    />
+                    <Input
+                        placeholder="Description"
+                        name="descriptionInput"
+                        onChange={this.props.handleChange}
+                        // value={descriptionInput}
+                    />
+                    <Input
+                        placeholder="Image"
+                        name="imageInput"
+                        onChange={this.props.handleChange}
+                        // value={imageInput}
+                    />
+                    <Button onClick={this.createSpace}>Add</Button>
+                    </form>
+                </div>
             </div>
           );
     }

@@ -2,26 +2,30 @@ import React from 'react';
 import './App.css';
 import GoogleMap from './components/GoogleMap';
 import NavBar from './components/NavBar';
-// import IconBar from './components/IconBar';
-import FindButton from './components/FindButton';
 import CreateSpaceForm from './components/CreateSpaceForm';
-import SpaceCard from './components/SpaceCard';
+import SpaceCards from './components/SpaceCards';
 
-import spaces from './sample-spaces';
+import sample from './sample-spaces'
 import axios from 'axios';
+import EditSpaceForm from './components/EditSpaceForm';
 
 class App extends React.Component {
 
-  state = {
-    spaces: {},
-    loading: false,
-    createSpace: true,
-    nameInput: '',
-    locationInput: '',
-    ratingInput: '',
-    descriptionInput: '',
-    imageInput: '',
-    test: ''
+  constructor(){
+    super()
+
+    this.state = {
+      spaces: {},
+      loading: false,
+      createSpace: true,
+      nameInput: '',
+      locationInput: '',
+      ratingInput: '',
+      descriptionInput: '',
+      imageInput: '',
+      test: {}
+    }
+
   }
 
   addSpace = space => {
@@ -47,56 +51,46 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-
-    //call mongo 
+    this.setState({ spaces: sample })
+    // //call api 
+    console.log('mounted')
     axios.get('/getWorkspaces')
-
-      .then(function(response){
-        console.log('AXIOS TEST 1')
-        console.log(response.data)
-        this.setState({test: 'response'})
+      .then((response) => {
+        console.log(response);
+        this.setState({test: response})
       })
-      .catch(function(errors){
-        console.log(errors)
+      .catch((err) => {
+        console.log(err)
       })
-      .then(function(){
-        console.log('AXIOS TEST')
-      })
-
-
   }
   
   render() {
     return (
       <div className="App" style={{height: '100vh'}}>
-        <NavBar/>
-        {/* <IconBar/> */}
-        <FindButton/>
-        <GoogleMap style={(this.state.createSpace === 'true')? {display: 'block'}: {display: 'none'}}/>
+        <NavBar
+          title={`work{Space}`}
+        />
+        <GoogleMap/>
         <CreateSpaceForm
           handleChange={this.handleChange}
           addSpace={this.addSpace}
           details={this.state}
-          clearForm={this.clearForm}
+          style={{display: 'none'}}
         />
-        <div className="spaceCards" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: '#FAFAFA'}}>
+        <ul style={{display: 'none'}}>
           {Object.keys(this.state.spaces).map(key => (
-            <SpaceCard
-            key={key}
-            index={key}
-            // change all details
-            details={this.state.spaces[key]}
-            spaces={this.state.spaces}
-            space={this.state.spaces[key]}
-            handleChange={this.handleChange}
-            updateSpace={this.updateSpace}
-            deleteSpace={this.deleteSpace}
+            <SpaceCards
+              key={key}
+              index={key}
+              details={this.state.spaces[key]}
+              handleChange={this.handleChange}
+              updateSpace={this.updateSpace}
+              deleteSpace={this.deleteSpace}
             />
           ))}
-        </div>
+        </ul>
       </div>
     );
   }
 }
-
 export default App;

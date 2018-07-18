@@ -5,6 +5,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+
 import Search from './Search';
 import LogInForm from './LogInForm';
 
@@ -28,23 +33,37 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-  addIcon: {
-    color: 'black'
+  navLinks: {
+    display: 'flex',
+  },
+  navLink: {
+    marginRight: '10px'
   }
+
 };
 
 function NavBar(props) {
   
-  
   const { classes } = props;
+
 
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appBar} position="static">
+      <AppBar className={classes.appBar} position="static" elevation={0}>
         <Toolbar className={classes.toolbar}>
-          <Typography variant="title"><a>{`work{Space}`}</a></Typography>
+          <Typography variant="title"><Link to="/">{props.title}</Link></Typography>
           <Search/>
-          <LogInForm/>
+          <div className={classes.navLinks}>
+            <Link to="/addSpace" className={classes.navLink}>
+              <Typography>Add</Typography>
+            </Link>
+            <Link to="/top" className={classes.navLink}>
+              <Typography>Explore</Typography>
+            </Link>
+            <Link to="/favorites" className={classes.navLink}>
+              <Typography>Favorites</Typography>
+            </Link>
+          </div>
         </Toolbar>
       </AppBar>
     </div>

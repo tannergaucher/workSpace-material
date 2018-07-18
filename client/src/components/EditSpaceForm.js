@@ -41,14 +41,12 @@ class EditSpaceForm extends React.Component {
             image: this.props.image
         })
 
-
         this.props.handleEditClick();
     }
 
     deleteFromStateAndDb = () => {
         //state
         this.props.deleteSpace(this.props.index)
-
         //mongo
         axios.post(`/delete/${this.props.id}`)
 

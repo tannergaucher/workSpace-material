@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -10,8 +9,14 @@ import Typography from '@material-ui/core/Typography';
 
 import EditSpaceForm from './EditSpaceForm';
 
-// conditional render: if (this.props.spaces)
+
 const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   card: {
     width: 555,
     marginTop: '1.5rem',
@@ -50,29 +55,28 @@ class SpaceCards extends React.Component{
   }
 
   render(){
-    const {classes, details} = this.props;
-
-    if (details.spaces) {
+    const { classes } = this.props;
+    const {name, image, desc, rating, location  } = this.props.details;
 
       return(
-        <div>
+        <div className={classes.container}>
             <Card className={classes.card} elevation={1}>
               <Typography className={classes.title}>
-                {details.name}
+                {name}
               </Typography>
               <CardMedia
                 className={classes.media}
-                image={details.image}
+                image={image}
               />
               <CardContent>
                   <Typography component="p">
-                    {details.description}
+                    {desc}
                   </Typography>
                   <Typography component="p">
-                    <b>Rating:</b> {details.rating}
+                    <b>Rating:</b> {rating}
                   </Typography>
                   <Typography component="p">
-                    {details.location}
+                    {location}
                   </Typography>
               </CardContent>
               <CardActions className={classes.btns}>
@@ -81,31 +85,15 @@ class SpaceCards extends React.Component{
                 </Button>
               </CardActions>
             </Card>
-            {/* <div className={classes.editForm} style={(this.state.edit === true) ? {display: 'inline'} : {display: 'none'}}>
-              <EditSpaceForm
-                space={this.props.space}
-                index={this.props.index}
-                updateSpace={this.props.updateSpace}
-                deleteSpace={this.props.deleteSpace}
-                id={this.props.details.id}
-                name={this.props.details.name}
-                location={this.props.details.location}
-                rating={this.props.details.rating}
-                description={this.props.details.description}
-                image={this.props.details.image}
-                handleEditClick={this.handleEditClick}
-              />
-            </div> */}
-          </div>  
+
+
+          <EditSpaceForm 
+            className={classes.container} 
+            style={(this.state.edit === 'true') ? {display: 'inline'} : {display: 'none'}}
+          />
+        </div>
       )
-    }
-    return null
   }
 }
-
-SpaceCards.propTypes = {
-  
-    classes: PropTypes.object.isRequired,
-  };
 
 export default withStyles(styles)(SpaceCards);
